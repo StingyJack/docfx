@@ -45,19 +45,9 @@ internal class PdfCommand : Command<PdfCommandOptions>
             config.BasePath = options.BasePath;
         }
 
-        if (options.ExcludeDefaultToc.HasValue)
-        {
-            config.ExcludeDefaultToc = options.ExcludeDefaultToc.Value;
-        }
-
         if (options.GeneratesExternalLink.HasValue)
         {
             config.GeneratesExternalLink = options.GeneratesExternalLink.Value;
-        }
-
-        if (!string.IsNullOrEmpty(options.FilePath))
-        {
-            config.Wkhtmltopdf.FilePath = Path.Combine(Environment.CurrentDirectory, options.FilePath);
         }
     }
 

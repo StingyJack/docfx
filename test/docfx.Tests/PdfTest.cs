@@ -47,11 +47,7 @@ public class PdfTest : TestBase
                     {
                         "pdf": {
                             "content": [{ "files": [ "*.md", "*.yml" ] }],
-                            "dest": "_site",
-                            "wkhtmltopdf": {
-                              "filePath": "C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe",
-                              "additionalArguments": "--enable-local-file-access"
-                            }
+                            "dest": "_site"
                         }
                     }
                     """,

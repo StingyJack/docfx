@@ -3,7 +3,7 @@
 
 using Microsoft.DocAsCode.Common;
 using Microsoft.DocAsCode.Exceptions;
-using Microsoft.DocAsCode.HtmlToPdf;
+using Microsoft.DocAsCode.Pdf;
 using Microsoft.DocAsCode.Plugins;
 
 namespace Microsoft.DocAsCode;
@@ -15,9 +15,6 @@ internal static class RunPdf
         EnvironmentContext.SetBaseDirectory(Path.GetFullPath(string.IsNullOrEmpty(configDirectory) ? Directory.GetCurrentDirectory() : configDirectory));
         // TODO: remove BaseDirectory from Config, it may cause potential issue when abused
         var baseDirectory = EnvironmentContext.BaseDirectory;
-
-        var wkhtmltopdfFilePath = config.Wkhtmltopdf?.FilePath is null ? null : Path.Combine(baseDirectory, config.Wkhtmltopdf.FilePath);
-        ConvertWrapper.PrerequisiteCheck(wkhtmltopdfFilePath);
 
         if (config.Serve == true)
         {
@@ -38,11 +35,8 @@ internal static class RunPdf
             DestDirectory = outputFolder,
             Host = config.Host,
             NeedGeneratePdfExternalLink = config.GeneratesExternalLink,
-            PdfConvertParallelism = config.MaxParallelism == null || config.MaxParallelism <= 0 ? Environment.ProcessorCount : config.MaxParallelism.Value,
             SourceDirectory = Path.Combine(rawOutputFolder, config.Destination ?? string.Empty),
             ExcludeTocs = config.ExcludedTocs?.ToArray(),
-            ExcludeDefaultToc = config.ExcludeDefaultToc,
-            FilePath = wkhtmltopdfFilePath,
             TocTitle = config.TocTitle,
             OutlineOption = config.OutlineOption,
             CoverPageTitle = config.CoverPageTitle,

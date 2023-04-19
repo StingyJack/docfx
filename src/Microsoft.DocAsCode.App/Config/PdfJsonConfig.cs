@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.DocAsCode.HtmlToPdf;
 using Newtonsoft.Json;
 
-namespace Microsoft.DocAsCode;
+namespace Microsoft.DocAsCode.Pdf;
 
 [Serializable]
 internal class PdfJsonConfig : BuildJsonConfig
@@ -18,20 +17,11 @@ internal class PdfJsonConfig : BuildJsonConfig
     [JsonProperty("generatesExternalLink")]
     public bool GeneratesExternalLink { get; set; }
 
-    [JsonProperty("excludeDefaultToc")]
-    public bool ExcludeDefaultToc { get; set; }
-
     [JsonProperty("excludedTocs")]
     public List<string> ExcludedTocs { get; set; }
 
     [JsonProperty("base")]
     public string BasePath { get; set; }
-
-    /// <summary>
-    /// Specify options specific to the wkhtmltopdf tooling used by the pdf command.
-    /// </summary>
-    [JsonProperty("wkhtmltopdf")]
-    public WkhtmltopdfJsonConfig Wkhtmltopdf { get; set; }
 
     /// <summary>
     /// Gets or sets the "Table of Contents" bookmark title.

@@ -65,10 +65,6 @@
       }
     ],
     "overwrite": "specs/*.md",
-    "wkhtmltopdf": {
-      "filePath": "C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe",
-      "additionalArguments": "--enable-local-file-access"
-    },
     "dest": "_site_pdf"
   }
 }
