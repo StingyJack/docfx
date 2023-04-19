@@ -31,11 +31,10 @@ internal static class RunPdf
         }
 
         var outputFolder = Path.GetFullPath(Path.Combine(string.IsNullOrEmpty(outputDirectory) ? baseDirectory : outputDirectory, config.Destination ?? string.Empty));
-        var rawOutputFolder = string.IsNullOrEmpty(config.RawOutputFolder) ? Path.Combine(outputFolder, "_raw") : config.RawOutputFolder;
+        var rawOutputFolder = Path.Combine(outputFolder, "_raw");
         var options = new PdfOptions
         {
             BasePath = config.BasePath,
-            CssFilePath = config.CssFilePath,
             DestDirectory = outputFolder,
             Host = config.Host,
             Locale = config.Locale,
@@ -45,15 +44,11 @@ internal static class RunPdf
             PdfDocsetName = config.Name ?? Path.GetFileName(EnvironmentContext.BaseDirectory),
             SourceDirectory = Path.Combine(rawOutputFolder, config.Destination ?? string.Empty),
             ExcludeTocs = config.ExcludedTocs?.ToArray(),
-            KeepRawFiles = config.KeepRawFiles,
             ExcludeDefaultToc = config.ExcludeDefaultToc,
-            LoadErrorHandling = config.LoadErrorHandling,
             FilePath = wkhtmltopdfFilePath,
-            AdditionalPdfCommandArgs = config.Wkhtmltopdf?.AdditionalArguments,
             TocTitle = config.TocTitle,
             OutlineOption = config.OutlineOption,
             CoverPageTitle = config.CoverPageTitle,
-            NoInputStreamArgs = config.NoInputStreamArgs,
         };
 
         // 1. call BuildCommand to generate html files first

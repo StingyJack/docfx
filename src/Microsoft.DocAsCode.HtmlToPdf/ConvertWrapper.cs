@@ -12,24 +12,14 @@ namespace Microsoft.DocAsCode.HtmlToPdf;
 
 public class ConvertWrapper
 {
-    #region Fields
-
-    private const string TmpFolder = ".tmp";
     private const string HtmlFilePattern = "*.html";
     private const string TocPageFileName = "TOC.html";
     private readonly PdfOptions _pdfOptions;
-
-    #endregion
-
-    #region Constructor
 
     public ConvertWrapper(PdfOptions pdfOptions)
     {
         _pdfOptions = pdfOptions;
     }
-    #endregion
-
-    #region Public Methods
 
     public static void PrerequisiteCheck(string filePath)
     {
@@ -52,19 +42,12 @@ public class ConvertWrapper
         }
         finally
         {
-            if (!_pdfOptions.KeepRawFiles)
+            if (Directory.Exists(basePath))
             {
-                if (Directory.Exists(basePath))
-                {
-                    FolderUtility.ForceDeleteDirectoryWithAllSubDirectories(basePath);
-                }
+                FolderUtility.ForceDeleteDirectoryWithAllSubDirectories(basePath);
             }
         }
     }
-
-    #endregion
-
-    #region Private Methods
 
     private void ConvertCore(string basePath)
     {
@@ -330,12 +313,8 @@ public class ConvertWrapper
             new HtmlToPdfOptions
             {
                 BasePath = basePath,
-                UserStyleSheet = _pdfOptions.CssFilePath,
-                LoadErrorHandling = _pdfOptions.LoadErrorHandling,
                 FilePath = _pdfOptions.FilePath,
-                AdditionalArguments = _pdfOptions.AdditionalPdfCommandArgs,
                 OutlineOption = _pdfOptions.OutlineOption,
-                IsReadArgsFromStdin = !_pdfOptions.NoInputStreamArgs,
                 MaxDegreeOfParallelism = _pdfOptions.PdfConvertParallelism,
             });
 
@@ -346,6 +325,4 @@ public class ConvertWrapper
     {
         return ManifestUtility.GetDocumentType(item) == targetType;
     }
-
-    #endregion
 }

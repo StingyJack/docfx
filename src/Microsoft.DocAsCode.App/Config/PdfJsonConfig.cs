@@ -24,29 +24,14 @@ internal class PdfJsonConfig : BuildJsonConfig
     [JsonProperty("generatesExternalLink")]
     public bool GeneratesExternalLink { get; set; }
 
-    [JsonProperty("keepRawFiles")]
-    public bool KeepRawFiles { get; set; }
-
     [JsonProperty("excludeDefaultToc")]
     public bool ExcludeDefaultToc { get; set; }
-
-    [JsonProperty("rawOutputFolder")]
-    public string RawOutputFolder { get; set; }
 
     [JsonProperty("excludedTocs")]
     public List<string> ExcludedTocs { get; set; }
 
-    [JsonProperty("css")]
-    public string CssFilePath { get; set; }
-
     [JsonProperty("base")]
     public string BasePath { get; set; }
-
-    /// <summary>
-    /// Specify how to handle pages that fail to load: abort, ignore or skip(default abort)
-    /// </summary>
-    [JsonProperty("errorHandling")]
-    public string LoadErrorHandling { get; set; }
 
     /// <summary>
     /// Specify options specific to the wkhtmltopdf tooling used by the pdf command.
@@ -71,11 +56,4 @@ internal class PdfJsonConfig : BuildJsonConfig
     /// </summary>
     [JsonProperty("coverTitle")]
     public string CoverPageTitle { get; set; } = "Cover Page";
-
-    /// <summary>
-    /// Are input arguments set using command line
-    /// </summary>
-    [JsonProperty("noStdin")]
-    public bool NoInputStreamArgs { get; set; }
-
-	}
+}

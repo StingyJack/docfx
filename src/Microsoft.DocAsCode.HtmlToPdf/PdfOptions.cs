@@ -11,10 +11,6 @@ public class PdfOptions
 
     public string PdfDocsetName { get; set; }
 
-    public string CssFilePath { get; set; }
-
-    public string LoadErrorHandling { get; set; }
-
     public string[] ExcludeTocs { get; set; }
 
     public bool GenerateAppendices { get; set; } = false;
@@ -27,8 +23,6 @@ public class PdfOptions
 
     public bool NeedGeneratePdfExternalLink { get; set; } = false;
 
-    public bool KeepRawFiles { get; set; } = false;
-
     public bool ExcludeDefaultToc { get; set; } = false;
 
     public int PdfConvertParallelism { get; set; } = 4;
@@ -39,11 +33,6 @@ public class PdfOptions
     /// Gets or sets the path and file name of the pdf executable.
     /// </summary>
     public string FilePath { get; set; }
-
-    /// <summary>
-    /// Specify additional command line arguments that should be passed to the pdf command.
-    /// </summary>
-    public string AdditionalPdfCommandArgs { get; set; }
 
     /// <summary>
     /// Gets or sets the "Table of Contents" bookmark title.
@@ -74,9 +63,4 @@ public class PdfOptions
         path = path.Trim('/');
         return path?.Length == 0 ? path : path + "/";
     }
-
-    /// <summary>
-    /// Are input arguments set using command line
-    /// </summary>
-    public bool NoInputStreamArgs { get; set; }
 }

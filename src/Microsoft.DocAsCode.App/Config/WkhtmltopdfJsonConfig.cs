@@ -16,10 +16,4 @@ internal class WkhtmltopdfJsonConfig
     /// </summary>
     [JsonProperty("filePath")]
     public string FilePath { get; set; }
-
-    /// <summary>
-    /// Specify additional command line arguments that should be passed to the wkhtmltopdf executable.
-    /// </summary>
-    [JsonProperty("additionalArguments")]
-    public string AdditionalArguments { get; set; }
 }

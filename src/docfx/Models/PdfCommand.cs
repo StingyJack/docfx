@@ -35,11 +35,6 @@ internal class PdfCommand : Command<PdfCommandOptions>
             config.ExcludedTocs = new ListWithStringFallback(options.ExcludedTocs);
         }
 
-        if (!string.IsNullOrEmpty(options.CssFilePath))
-        {
-            config.CssFilePath = options.CssFilePath;
-        }
-
         if (!string.IsNullOrEmpty(options.Name))
         {
             config.Name = options.Name;
@@ -60,24 +55,9 @@ internal class PdfCommand : Command<PdfCommandOptions>
             config.BasePath = options.BasePath;
         }
 
-        if (!string.IsNullOrEmpty(options.RawOutputFolder))
-        {
-            config.RawOutputFolder = options.RawOutputFolder;
-        }
-
-        if (!string.IsNullOrEmpty(options.LoadErrorHandling))
-        {
-            config.LoadErrorHandling = options.LoadErrorHandling;
-        }
-
         if (options.GeneratesAppendices.HasValue)
         {
             config.GeneratesAppendices = options.GeneratesAppendices.Value;
-        }
-
-        if (options.KeepRawFiles.HasValue)
-        {
-            config.KeepRawFiles = options.KeepRawFiles.Value;
         }
 
         if (options.ExcludeDefaultToc.HasValue)
@@ -88,11 +68,6 @@ internal class PdfCommand : Command<PdfCommandOptions>
         if (options.GeneratesExternalLink.HasValue)
         {
             config.GeneratesExternalLink = options.GeneratesExternalLink.Value;
-        }
-
-        if (options.NoInputStreamArgs.HasValue)
-        {
-            config.NoInputStreamArgs = options.NoInputStreamArgs.Value;
         }
 
         if (!string.IsNullOrEmpty(options.FilePath))
