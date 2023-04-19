@@ -13,10 +13,6 @@ internal class PdfCommandOptions : BuildCommandOptions
     [CommandOption("--name")]
     public string Name { get; set; }
 
-    [Description("Specify whether or not to generate appendices for not-in-TOC articles")]
-    [CommandOption("--generatesAppendices")]
-    public bool? GeneratesAppendices { get; set; }
-
     [Description("Specify whether or not to generate external links for PDF")]
     [CommandOption("--generatesExternalLink")]
     public bool? GeneratesExternalLink { get; set; }

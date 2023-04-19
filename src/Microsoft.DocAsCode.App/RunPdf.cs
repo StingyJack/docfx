@@ -39,7 +39,6 @@ internal static class RunPdf
             Host = config.Host,
             Locale = config.Locale,
             NeedGeneratePdfExternalLink = config.GeneratesExternalLink,
-            GenerateAppendices = config.GeneratesAppendices,
             PdfConvertParallelism = config.MaxParallelism == null || config.MaxParallelism <= 0 ? Environment.ProcessorCount : config.MaxParallelism.Value,
             PdfDocsetName = config.Name ?? Path.GetFileName(EnvironmentContext.BaseDirectory),
             SourceDirectory = Path.Combine(rawOutputFolder, config.Destination ?? string.Empty),

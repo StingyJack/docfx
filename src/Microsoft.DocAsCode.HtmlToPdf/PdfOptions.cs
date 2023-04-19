@@ -13,8 +13,6 @@ public class PdfOptions
 
     public string[] ExcludeTocs { get; set; }
 
-    public bool GenerateAppendices { get; set; } = false;
-
     public string Host { get; set; }
 
     public string BasePath { get; set; }

@@ -18,9 +18,6 @@ internal class PdfJsonConfig : BuildJsonConfig
     [JsonProperty("locale")]
     public string Locale { get; set; }
 
-    [JsonProperty("generatesAppendices")]
-    public bool GeneratesAppendices { get; set; }
-
     [JsonProperty("generatesExternalLink")]
     public bool GeneratesExternalLink { get; set; }
 

@@ -55,11 +55,6 @@ internal class PdfCommand : Command<PdfCommandOptions>
             config.BasePath = options.BasePath;
         }
 
-        if (options.GeneratesAppendices.HasValue)
-        {
-            config.GeneratesAppendices = options.GeneratesAppendices.Value;
-        }
-
         if (options.ExcludeDefaultToc.HasValue)
         {
             config.ExcludeDefaultToc = options.ExcludeDefaultToc.Value;

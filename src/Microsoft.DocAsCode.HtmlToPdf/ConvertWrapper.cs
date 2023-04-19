@@ -103,11 +103,6 @@ public class ConvertWrapper
 
                     HtmlNotInTocTransformer(basePath, manifestUrlCache, currentTocHtmls);
 
-                    if (_pdfOptions.GenerateAppendices)
-                    {
-                        currentTocHtmls.AsParallel().ForAll(tocHtmls.Add);
-                    }
-
                     if (File.Exists(tocPageFilePath) && !_pdfOptions.ExcludeDefaultToc)
                     {
                         RemoveQueryStringAndBookmarkTransformer(tocPageFilePath);
@@ -174,31 +169,6 @@ public class ConvertWrapper
         {
             using var ws = new StreamWriter(fileStream);
             JsonUtility.Serialize(ws, pdfInformations);
-        }
-
-        if (_pdfOptions.GenerateAppendices)
-        {
-            var otherConceptuals = ManifestHtmlsExceptTocHtmls(manifest, tocHtmls);
-            if (otherConceptuals.Count > 0)
-            {
-                var htmlModels = new List<HtmlModel>();
-                var htmlModel = new HtmlModel
-                {
-                    Title = "appendices",
-                    Children = otherConceptuals.Select((other, index) => new HtmlModel
-                    {
-                        Title = $"Appendix {index + 1}",
-                        HtmlFilePath = other
-                    }).ToList()
-                };
-                htmlModels.Add(htmlModel);
-                Logger.LogVerbose("Starting to convert appendices to pdf.");
-                ConvertCore(basePath, "appendices", htmlModels);
-            }
-        }
-        else
-        {
-            Logger.LogVerbose("Skipped to convert appendices to pdf.");
         }
     }
 
@@ -290,13 +260,6 @@ public class ConvertWrapper
 
             htmlModels.Add(htmlModel);
         }
-    }
-
-    private IList<string> ManifestHtmlsExceptTocHtmls(Manifest manifest, ConcurrentBag<string> tocHtmls)
-    {
-        var manifestConceptuals = GetManifestHtmls(manifest);
-        var others = manifestConceptuals.Where(p => !tocHtmls.Contains(p)).Distinct().ToList();
-        return others;
     }
 
     private IList<HtmlModel> BuildHtmlModels(string basePath, IList<TocModel> tocModels, ConcurrentBag<string> tocHtmls)
