@@ -44,8 +44,6 @@ class DefaultCommand : Command<DefaultCommand.Options>
                 DotnetApiCatalog.Exec(config.Metadata, new(), baseDirectory, outputFolder).GetAwaiter().GetResult();
             if (config.Build is not null)
                 RunBuild.Exec(config.Build, new(), baseDirectory, outputFolder);
-            if (config.Pdf is not null)
-                RunPdf.Exec(config.Pdf, new(), baseDirectory, outputFolder);
         });
     }
 
@@ -56,8 +54,5 @@ class DefaultCommand : Command<DefaultCommand.Options>
 
         [JsonProperty("metadata")]
         public MetadataJsonConfig Metadata { get; set; }
-
-        [JsonProperty("pdf")]
-        public PdfJsonConfig Pdf { get; set; }
     }
 }

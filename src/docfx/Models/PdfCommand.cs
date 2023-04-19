@@ -1,59 +1,27 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Newtonsoft.Json;
+using System.ComponentModel;
+using Microsoft.DocAsCode.Pdf;
 using Spectre.Console.Cli;
-using System.Diagnostics.CodeAnalysis;
+
+#nullable enable
 
 namespace Microsoft.DocAsCode;
 
-internal class PdfCommand : Command<PdfCommandOptions>
+class PdfCommand : AsyncCommand<PdfCommand.Settings>
 {
-    public override int Execute([NotNull] CommandContext context, [NotNull] PdfCommandOptions options)
+    [Description("Creates PDF files for each TOC file in a directory")]
+    public class Settings : CommandSettings
     {
-        return CommandHelper.Run(options, () =>
-        {
-            var Config = ParseOptions(options, out var BaseDirectory, out var OutputFolder);
-            RunPdf.Exec(Config, new(), BaseDirectory, OutputFolder);
-        });
+        [Description("Path to the directory containing toc.json files")]
+        [CommandArgument(0, "[directory]")]
+        public string? Directory { get; set; }
     }
 
-    private static PdfJsonConfig ParseOptions(PdfCommandOptions options, out string baseDirectory, out string outputFolder)
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings)
     {
-        (var config, baseDirectory) = CommandHelper.GetConfig<PdfConfig>(options.ConfigFile);
-        outputFolder = options.OutputFolder;
-        MergeOptionsToConfig(options, config.Item, baseDirectory);
-        return config.Item;
-    }
-
-    private static void MergeOptionsToConfig(PdfCommandOptions options, PdfJsonConfig config, string configDirectory)
-    {
-        BuildCommand.MergeOptionsToConfig(options, config, configDirectory);
-
-        if (options.ExcludedTocs is not null && options.ExcludedTocs.Any())
-        {
-            config.ExcludedTocs = new ListWithStringFallback(options.ExcludedTocs);
-        }
-
-        if (!string.IsNullOrEmpty(options.Host))
-        {
-            config.Host = options.Host;
-        }
-
-        if (!string.IsNullOrEmpty(options.BasePath))
-        {
-            config.BasePath = options.BasePath;
-        }
-
-        if (options.GeneratesExternalLink.HasValue)
-        {
-            config.GeneratesExternalLink = options.GeneratesExternalLink.Value;
-        }
-    }
-
-    private sealed class PdfConfig
-    {
-        [JsonProperty("pdf")]
-        public PdfJsonConfig Item { get; set; }
+        await PdfBuilder.CreatePdfForDirectory(settings.Directory ?? Directory.GetCurrentDirectory(), new());
+        return 0;
     }
 }
