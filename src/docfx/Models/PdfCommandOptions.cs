@@ -9,10 +9,6 @@ namespace Microsoft.DocAsCode;
 [Description("Generate pdf file")]
 internal class PdfCommandOptions : BuildCommandOptions
 {
-    [Description("Specify the name of the generated pdf")]
-    [CommandOption("--name")]
-    public string Name { get; set; }
-
     [Description("Specify whether or not to generate external links for PDF")]
     [CommandOption("--generatesExternalLink")]
     public bool? GeneratesExternalLink { get; set; }

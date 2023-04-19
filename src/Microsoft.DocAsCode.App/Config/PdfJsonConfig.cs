@@ -9,9 +9,6 @@ namespace Microsoft.DocAsCode;
 [Serializable]
 internal class PdfJsonConfig : BuildJsonConfig
 {
-    [JsonProperty("name")]
-    public string Name { get; set; }
-
     [JsonProperty("host")]
     public new string Host { get; set; }
 

@@ -35,19 +35,9 @@ internal class PdfCommand : Command<PdfCommandOptions>
             config.ExcludedTocs = new ListWithStringFallback(options.ExcludedTocs);
         }
 
-        if (!string.IsNullOrEmpty(options.Name))
-        {
-            config.Name = options.Name;
-        }
-
         if (!string.IsNullOrEmpty(options.Host))
         {
             config.Host = options.Host;
-        }
-
-        if (!string.IsNullOrEmpty(options.Locale))
-        {
-            config.Locale = options.Locale;
         }
 
         if (!string.IsNullOrEmpty(options.BasePath))

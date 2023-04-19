@@ -108,7 +108,7 @@ public class HtmlNotInTocTransformer : ITransformer
                                             continue;
                                         }
 
-                                        if (!string.IsNullOrEmpty(_pdfOptions.Locale) && !string.IsNullOrEmpty(_pdfOptions.Host))
+                                        if (!string.IsNullOrEmpty(_pdfOptions.Host))
                                         {
                                             // the assetId may has '.html' extension, but we should redirect to the site which should not have '.html' extension, so trim it here.
                                             tag.Attributes["href"].Value = string.Format(_pdfOptions.ExternalLinkFormat, assetId.TrimEnd(BuildToolConstants.OutputFileExtensions.ContentHtmlExtension));

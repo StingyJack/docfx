@@ -9,15 +9,11 @@ public class PdfOptions
 
     public string DestDirectory { get; set; }
 
-    public string PdfDocsetName { get; set; }
-
     public string[] ExcludeTocs { get; set; }
 
     public string Host { get; set; }
 
     public string BasePath { get; set; }
-
-    public string Locale { get; set; }
 
     public bool NeedGeneratePdfExternalLink { get; set; } = false;
 
@@ -25,7 +21,7 @@ public class PdfOptions
 
     public int PdfConvertParallelism { get; set; } = 4;
 
-    public string ExternalLinkFormat => $"{Normalize(Host)}{Normalize(Locale)}{Normalize(BasePath)}{{0}}";
+    public string ExternalLinkFormat => $"{Normalize(Host)}{Normalize(BasePath)}{{0}}";
 
     /// <summary>
     /// Gets or sets the path and file name of the pdf executable.

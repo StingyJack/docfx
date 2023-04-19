@@ -79,8 +79,6 @@ public class ConvertWrapper
 
         var tocHtmls = new ConcurrentBag<string>();
 
-        IDictionary<string, PdfInformation> pdfInformations = new ConcurrentDictionary<string, PdfInformation>();
-
         var manifestItems = manifest.Files.Where(f => IsType(f, ManifestItemType.Content)).ToArray();
         var manifestUrlCache = new UrlCache(basePath, manifestItems);
 
@@ -123,11 +121,7 @@ public class ConvertWrapper
 
                     if (_pdfOptions.ExcludeTocs == null || _pdfOptions.ExcludeTocs.All(p => NormalizeFilePath(p) != tocFilePath))
                     {
-                        var pdfNameFragments = new List<string> { _pdfOptions.PdfDocsetName };
-                        if (!string.IsNullOrEmpty(_pdfOptions.Locale))
-                        {
-                            pdfNameFragments.Add(_pdfOptions.Locale);
-                        }
+                        var pdfNameFragments = new List<string> { };
 
                         // TODO: not consistent with OPS logic Path.ChangeExtension(tocAssetId, FileExtensions.PdfExtension).Replace('/', '_')
                         // TODO: need to update the logic in OPS when merging with OPS
@@ -143,15 +137,6 @@ public class ConvertWrapper
                         var pdfName = pdfNameFragments.ToDelimitedString("_") + FileExtensions.PdfExtension;
                         ConvertCore(basePath, pdfName, htmlModels);
                         Logger.LogInfo($"{pdfName} is generated based on {tocJson} under folder {_pdfOptions.DestDirectory}");
-                        pdfInformations.Add(
-                            pdfName,
-                            new PdfInformation
-                            {
-                                DocsetName = _pdfOptions.PdfDocsetName,
-                                TocFiles = new string[] { tocFile.SourceRelativePath },
-                                Version = tocFile.Group,
-                                AssetId = tocAssetId,
-                            });
                     }
                     else
                     {
@@ -164,12 +149,6 @@ public class ConvertWrapper
                     Logger.LogError($"Error happen when converting {tocJson} to Pdf. Details: {ex.ToString()}");
                 }
             });
-
-        using (var fileStream = new FileStream(Path.Combine(_pdfOptions.DestDirectory, _pdfOptions.PdfDocsetName + FileExtensions.JsonExtension), FileMode.Create, FileAccess.Write))
-        {
-            using var ws = new StreamWriter(fileStream);
-            JsonUtility.Serialize(ws, pdfInformations);
-        }
     }
 
     private string NormalizeFilePath(string relativePath)
